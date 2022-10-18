@@ -1,19 +1,24 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { aws_s3 as s3 } from 'aws-cdk-lib';
-// import * as sqs from 'aws-cdk-lib/aws-sqs';
 
+
+/*
+Constructs:
+  scope- tells the bucket that the stack is its parent
+  id- the id of the bucket within the AWS-CDK app it adds a hash based on the buckets location
+  props- values that define the buckets properties (can be omitted if props are optional)
+
+  NOTE: you can subclass any construct
+*/
 export class HelloCdkStack extends cdk.Stack {
   constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // The code that defines your stack goes here
+    // Bucket resource 
     new s3.Bucket(this, 'MyFirstBucket', {
-      versioned: true
+      versioned: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
-    // example resource
-    // const queue = new sqs.Queue(this, 'HelloCdkQueue', {
-    //   visibilityTimeout: cdk.Duration.seconds(300)
-    // });
   }
 }
